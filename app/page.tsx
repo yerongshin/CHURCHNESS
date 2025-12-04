@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const accountMap: Record<string, string> = {
   "2부 두나미스": "계좌번호 미정",
@@ -9,6 +10,8 @@ const accountMap: Record<string, string> = {
 };
 
 export default function Page() {
+  const router = useRouter();
+
   // --- form states (1~8) ---
   const [agree, setAgree] = useState(false);
   const [department, setDepartment] = useState('');
@@ -20,7 +23,6 @@ export default function Page() {
   const [special, setSpecial] = useState('');
 
   const [paid, setPaid] = useState(false);
-
   const accountText = department ? accountMap[department] : "부서를 선택하면 계좌가 표시됩니다.";
 
   // --- attendance (9) ---
@@ -32,13 +34,11 @@ export default function Page() {
     { key: 'dinner', label: '저녁' },
     { key: 'night', label: '숙박' },
   ];
-
   const disabledMap: Record<string, boolean> = {
     'wed-morning': true,
     'sat-dinner': true,
     'sat-night': true,
   };
-
   const [selectedCells, setSelectedCells] = useState<Record<string, boolean>>({});
 
   const FULL_FEE = 60000;
@@ -53,17 +53,16 @@ export default function Page() {
 
   const selectAll = () => {
     const next: Record<string, boolean> = {};
-    dayKeys.forEach(d => {
-      rowKeys.forEach(r => {
-        const k = `${d}-${r.key}`;
-        if (!disabledMap[k]) next[k] = true;
-      });
-    });
+    dayKeys.forEach(d => rowKeys.forEach(r => {
+      const k = `${d}-${r.key}`;
+      if (!disabledMap[k]) next[k] = true;
+    }));
     setSelectedCells(next);
   };
 
   const clearAll = () => setSelectedCells({});
 
+  // --- fee 계산 ---
   useEffect(() => {
     let checkedCount = 0;
     const dinnerOrNightDays = new Set<string>();
@@ -73,11 +72,8 @@ export default function Page() {
       rowKeys.forEach(r => {
         const key = `${d}-${r.key}`;
         if (selectedCells[key]) {
-          if (r.key === 'dinner' || r.key === 'night') {
-            hasDinnerOrNight = true;
-          } else {
-            checkedCount += 1;
-          }
+          if (r.key === 'dinner' || r.key === 'night') hasDinnerOrNight = true;
+          else checkedCount += 1;
         }
       });
       if (hasDinnerOrNight) dinnerOrNightDays.add(d);
@@ -96,37 +92,25 @@ export default function Page() {
     if (!name) { alert('이름을 입력해주세요.'); return; }
     if (!phone || !phoneLooksValid(phone)) { alert('연락처 형식을 확인해주세요.'); return; }
 
-    // 체크박스 값 매핑 (9번)
+    // 체크박스 값 매핑 (1이면 표시)
     const attendanceMap: Record<string, string> = {};
-    dayKeys.forEach(d => {
-      rowKeys.forEach(r => {
-        const key = `${d}-${r.key}`;
-        if (selectedCells[key]) attendanceMap[key] = 'O';
-        else attendanceMap[key] = '';
-      });
-    });
+    dayKeys.forEach(d => rowKeys.forEach(r => {
+      const key = `${d}-${r.key}`;
+      attendanceMap[key] = selectedCells[key] ? '1' : '';
+    }));
 
-    // 9번 열 매핑: H ~ U
+    // H~U 열: 수점~토점
     const columns9 = [
       'wed-lunch', 'wed-dinner', 'wed-night',
       'thu-morning', 'thu-lunch', 'thu-dinner', 'thu-night',
       'fri-morning', 'fri-lunch', 'fri-dinner', 'fri-night',
       'sat-morning', 'sat-lunch',
     ];
-
     const values9 = columns9.map(c => attendanceMap[c] || '');
 
     const payload = {
-      department,
-      year,
-      gender,
-      name,
-      phone,
-      leader,
-      special,
-      attendance: values9,
-      fee,
-      paid,
+      department, year, gender, name, phone, leader, special,
+      attendance: values9, fee, paid
     };
 
     try {
@@ -136,8 +120,11 @@ export default function Page() {
         body: JSON.stringify(payload),
       });
       const data = await res.json();
-      if (data.ok) alert('제출이 완료되었습니다!');
-      else alert('제출 중 오류가 발생했습니다.');
+      if (data.ok) {
+        router.push(`/success?department=${encodeURIComponent(department)}&fee=${fee}`);
+      } else {
+        alert('제출 중 오류가 발생했습니다.');
+      }
     } catch (err) {
       console.error(err);
       alert('제출 중 오류가 발생했습니다.');
@@ -164,9 +151,8 @@ export default function Page() {
             </label>
           </div>
 
-          {/* 2~8 */}
           <div className="mb-4">
-            <label className="font-medium block mb-1">2. 소속 부서를 선택해주세요.</label>
+            <label className="font-medium block mb-1">2. 소속 부서</label>
             <select className="w-full border rounded p-2" value={department} onChange={e => setDepartment(e.target.value)}>
               <option value="">선택해주세요</option>
               <option value="2부 두나미스">2부 두나미스</option>
@@ -176,7 +162,7 @@ export default function Page() {
           </div>
 
           <div className="mb-4">
-            <label className="font-medium block mb-1">3. 2026년 기준 학년을 선택해주세요.</label>
+            <label className="font-medium block mb-1">3. 학년</label>
             <select className="w-full border rounded p-2" value={year} onChange={e => setYear(e.target.value)}>
               <option value="">선택해주세요</option>
               {Array.from({ length: 16 }, (_, i) => i + 1).map(n => (
@@ -186,7 +172,7 @@ export default function Page() {
           </div>
 
           <div className="mb-4">
-            <label className="font-medium block mb-1">4. 성별을 선택해주세요.</label>
+            <label className="font-medium block mb-1">4. 성별</label>
             <div className="flex gap-6">
               <label className="flex items-center gap-2">
                 <input type="radio" name="gender" checked={gender==='남자'} onChange={()=>setGender('남자')} /> 남자
@@ -225,13 +211,12 @@ export default function Page() {
           {/* 9. 출석 */}
           <div className="mb-6">
             <div className="flex items-center justify-between mb-3">
-              <div className="font-medium">9. 수양회 참석 일정</div>
+              <div className="font-medium">9. 참석 일정</div>
               <div className="flex gap-2">
                 <button type="button" onClick={selectAll} className="px-3 py-1 rounded bg-yellow-200">전체 선택</button>
                 <button type="button" onClick={clearAll} className="px-3 py-1 rounded bg-yellow-200">전체 해제</button>
               </div>
             </div>
-
             <div className="overflow-x-auto relative">
               <table className="w-full border-collapse text-center">
                 <thead>
@@ -265,7 +250,7 @@ export default function Page() {
 
           {/* 10. 확인 */}
           <div className="mb-6 bg-[#fff3cd] border border-[#ffeeba] rounded p-4 text-sm">
-            <div className="font-medium mb-2">10. 꼭! 확인해주세요 🙏</div>
+            <div className="font-medium mb-2">10. 꼭 확인</div>
             <label className="flex items-center gap-2 mt-3">
               <input type="checkbox" checked={paid} onChange={e=>setPaid(e.target.checked)} />
               <span className="font-semibold text-green-700">입금 완료했습니다!</span>
