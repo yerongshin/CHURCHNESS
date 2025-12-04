@@ -1,15 +1,17 @@
 import { google } from "googleapis";
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { department, year, gender, name, phone, leader, special, attendance, fee, paid } = body;
 
-    const keyPath = path.join(process.cwd(), "form-key.json");
-    const keyFile = JSON.parse(fs.readFileSync(keyPath, "utf-8"));
+    if (!process.env.GOOGLE_SERVICE_KEY) {
+      throw new Error("GOOGLE_SERVICE_KEY 환경변수가 없습니다.");
+    }
+
+    // Vercel 환경변수에서 직접 JSON 파싱
+    const keyFile = JSON.parse(process.env.GOOGLE_SERVICE_KEY);
 
     const auth = new google.auth.GoogleAuth({
       credentials: keyFile,
@@ -17,12 +19,9 @@ export async function POST(req: Request) {
     });
 
     const sheets = google.sheets({ version: "v4", auth });
-    const spreadsheetId = "1Rv6W6_UsT_mYg5sygtNkr7jakyIhJWH4dKgnnMldtpo"; // 실제 시트 ID
+    const spreadsheetId = "1Rv6W6_UsT_mYg5sygtNkr7jakyIhJWH4dKgnnMldtpo";
 
-    // A열: 타임스탬프
     const timestamp = new Date().toISOString();
-
-    // 최종 값 배열 (A~V)
     const values = [
       timestamp,
       department,
