@@ -1,7 +1,7 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
 
-export default function CompletePage() {
+export default function SuccessContent() {
   const searchParams = useSearchParams();
   const fee = searchParams.get('fee');
   const department = searchParams.get('department');

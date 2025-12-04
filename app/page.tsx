@@ -21,8 +21,8 @@ export default function Page() {
   const [phone, setPhone] = useState('');
   const [leader, setLeader] = useState('');
   const [special, setSpecial] = useState('');
-
   const [paid, setPaid] = useState(false);
+
   const accountText = department ? accountMap[department] : "부서를 선택하면 계좌가 표시됩니다.";
 
   // --- attendance (9) ---
@@ -34,13 +34,14 @@ export default function Page() {
     { key: 'dinner', label: '저녁' },
     { key: 'night', label: '숙박' },
   ];
+
   const disabledMap: Record<string, boolean> = {
     'wed-morning': true,
     'sat-dinner': true,
     'sat-night': true,
   };
-  const [selectedCells, setSelectedCells] = useState<Record<string, boolean>>({});
 
+  const [selectedCells, setSelectedCells] = useState<Record<string, boolean>>({});
   const FULL_FEE = 60000;
   const PER_ITEM = 12000;
   const [fee, setFee] = useState<number>(0);
@@ -62,7 +63,6 @@ export default function Page() {
 
   const clearAll = () => setSelectedCells({});
 
-  // --- fee 계산 ---
   useEffect(() => {
     let checkedCount = 0;
     const dinnerOrNightDays = new Set<string>();
@@ -92,14 +92,12 @@ export default function Page() {
     if (!name) { alert('이름을 입력해주세요.'); return; }
     if (!phone || !phoneLooksValid(phone)) { alert('연락처 형식을 확인해주세요.'); return; }
 
-    // 체크박스 값 매핑 (1이면 표시)
     const attendanceMap: Record<string, string> = {};
     dayKeys.forEach(d => rowKeys.forEach(r => {
       const key = `${d}-${r.key}`;
       attendanceMap[key] = selectedCells[key] ? '1' : '';
     }));
 
-    // H~U 열: 수점~토점
     const columns9 = [
       'wed-lunch', 'wed-dinner', 'wed-night',
       'thu-morning', 'thu-lunch', 'thu-dinner', 'thu-night',
@@ -108,10 +106,7 @@ export default function Page() {
     ];
     const values9 = columns9.map(c => attendanceMap[c] || '');
 
-    const payload = {
-      department, year, gender, name, phone, leader, special,
-      attendance: values9, fee, paid
-    };
+    const payload = { department, year, gender, name, phone, leader, special, attendance: values9, fee, paid };
 
     try {
       const res = await fetch('/api/submit', {
@@ -134,7 +129,6 @@ export default function Page() {
   return (
     <div className="min-h-screen py-8 px-4 flex justify-center bg-[#a7dbe0]">
       <div className="w-full max-w-800">
-
         <div className="bg-white rounded-2xl shadow p-4 text-center mb-6">
           <img src="https://placehold.co/300x80?text=Logo" alt="logo" className="mx-auto mb-2 max-h-20" />
           <h1 className="text-xl font-semibold">2026 사랑의교회 대학부 256 겨울연합수양회 등록</h1>
@@ -151,13 +145,12 @@ export default function Page() {
             </label>
           </div>
 
+          {/* 2~8 */}
           <div className="mb-4">
             <label className="font-medium block mb-1">2. 소속 부서</label>
             <select className="w-full border rounded p-2" value={department} onChange={e => setDepartment(e.target.value)}>
               <option value="">선택해주세요</option>
-              <option value="2부 두나미스">2부 두나미스</option>
-              <option value="5부 필그림">5부 필그림</option>
-              <option value="6부 예닮공">6부 예닮공</option>
+              {Object.keys(accountMap).map(dep => <option key={dep} value={dep}>{dep}</option>)}
             </select>
           </div>
 
@@ -165,21 +158,18 @@ export default function Page() {
             <label className="font-medium block mb-1">3. 학년</label>
             <select className="w-full border rounded p-2" value={year} onChange={e => setYear(e.target.value)}>
               <option value="">선택해주세요</option>
-              {Array.from({ length: 16 }, (_, i) => i + 1).map(n => (
-                <option key={n} value={String(n)}>{n}학년</option>
-              ))}
+              {Array.from({ length: 16 }, (_, i) => i + 1).map(n => <option key={n} value={String(n)}>{n}학년</option>)}
             </select>
           </div>
 
           <div className="mb-4">
             <label className="font-medium block mb-1">4. 성별</label>
             <div className="flex gap-6">
-              <label className="flex items-center gap-2">
-                <input type="radio" name="gender" checked={gender==='남자'} onChange={()=>setGender('남자')} /> 남자
-              </label>
-              <label className="flex items-center gap-2">
-                <input type="radio" name="gender" checked={gender==='여자'} onChange={()=>setGender('여자')} /> 여자
-              </label>
+              {['남자','여자'].map(g => (
+                <label key={g} className="flex items-center gap-2">
+                  <input type="radio" name="gender" checked={gender===g} onChange={()=>setGender(g)} /> {g}
+                </label>
+              ))}
             </div>
           </div>
 
