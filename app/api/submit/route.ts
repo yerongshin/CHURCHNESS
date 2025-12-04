@@ -1,13 +1,15 @@
 import { google } from "googleapis";
 import { NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { department, year, gender, name, phone, leader, special, attendance, fee, paid } = body;
 
-    // 환경변수에서 서비스 계정 키 읽기
-    const keyFile = JSON.parse(process.env.GOOGLE_SERVICE_KEY || '{}');
+    const keyPath = path.join(process.cwd(), "form-key.json");
+    const keyFile = JSON.parse(fs.readFileSync(keyPath, "utf-8"));
 
     const auth = new google.auth.GoogleAuth({
       credentials: keyFile,
@@ -15,24 +17,23 @@ export async function POST(req: Request) {
     });
 
     const sheets = google.sheets({ version: "v4", auth });
-
-    const spreadsheetId = "1Rv6W6_UsT_mYg5sygtNkr7jakyIhJWH4dKgnnMldtpo"; // 시트 ID
+    const spreadsheetId = "1Rv6W6_UsT_mYg5sygtNkr7jakyIhJWH4dKgnnMldtpo"; // 실제 시트 ID
 
     // A열: 타임스탬프
     const timestamp = new Date().toISOString();
 
-    // 최종 값 배열 (A~U)
+    // 최종 값 배열 (A~V)
     const values = [
-      timestamp,        // A
-      department,       // B
-      year,             // C
-      gender,           // D
-      name,             // E
-      phone,            // F
-      leader,           // G
-      special,          // H
-      ...attendance,    // I~T
-      fee               // U (등록비)
+      timestamp,
+      department,
+      year,
+      gender,
+      name,
+      phone,
+      leader,
+      special,
+      ...attendance,
+      fee,
     ];
 
     await sheets.spreadsheets.values.append({
