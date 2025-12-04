@@ -1,10 +1,9 @@
-'use client';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function SuccessContent() {
+export default function SuccessPage() {
   const searchParams = useSearchParams();
-  const fee = searchParams.get('fee');
-  const department = searchParams.get('department');
+  const fee = searchParams?.get('fee');
+  const department = searchParams?.get('department');
 
   const accountMap: Record<string, string> = {
     "2부 두나미스": "계좌번호 미정",
