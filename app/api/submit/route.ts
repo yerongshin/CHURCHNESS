@@ -1,5 +1,6 @@
 import { google } from "googleapis";
 import { NextResponse } from "next/server";
+console.log("GOOGLE_SERVICE_KEY RAW:", process.env.GOOGLE_SERVICE_KEY);
 
 export async function POST(req: Request) {
   try {
