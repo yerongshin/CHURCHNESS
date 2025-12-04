@@ -1,4 +1,6 @@
 'use client';
+
+export const dynamic = 'force-dynamic'; // 클라이언트 렌더링 강제
 import { useSearchParams } from 'next/navigation';
 
 export default function CompletePage() {
