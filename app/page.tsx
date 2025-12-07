@@ -201,7 +201,7 @@ export default function Page() {
 
         {/* ------------------------ 안내문 ------------------------ */}
         <div className="w-full bg-gray-50 text-black rounded-xl p-5 mb-6 text-sm leading-relaxed border border-gray-200">
-          <p className="font-semibold text-center mb-3">
+          <p className="font-semibold text-center mb-6">
             “또 만물을 그의 발 아래에 복종하게 하시고 그를 만물 위에 교회의
             머리로 삼으셨느니라 교회는 그의 몸이니 만물 안에서 만물을 충만하게
             하시는 이의 충만함이니라" [에베소서 1:22-23]
@@ -209,20 +209,20 @@ export default function Page() {
 
           <p className="text-sm mb-1">🗓️ 주후 2026년 1월 21일(수) - 1월 24일(토)</p>
           <p className="text-sm mb-1">📍 사랑의교회 안성수양관</p>
-          <p className="text-sm mb-3">🎤 임병선 목사 (용인제일교회)</p>
+          <p className="text-sm mb-6">🎤 임병선 목사 (용인제일교회)</p>
 
           <p className="text-sm mb-1">
             <span className="bg-yellow-100">
-              ✅ <b>1차 등록</b>: 2025.12.7 - 2026.1.3 → 전참 60,000원
+              ✅ <b>1차 등록</b>: 주후 2025년 12월 7일(주일) - 2026년 1월 3일(토) → 전참 60,000원
             </span>
           </p>
-          <p className="text-sm mb-1">✅ 2차 등록: 2026.1.4 - 1.18 → 전참 65,000원</p>
-          <p className="text-sm mb-3">✅ 3차 등록: 2026.1.24(수) → 전참 70,000원</p>
+          <p className="text-sm mb-1">✅ 2차 등록: 주후 2026년 1월 4일(주일) - 1월 18일(주일) → 전참 65,000원</p>
+          <p className="text-sm mb-6">✅ 현장 등록 : 주후 2026년 1월 21일(수) → 전참 70,000원</p>
 
           <p className="text-sm mb-1">
             ** 저녁식사·숙박: 둘 중 하나만 선택하거나 둘 다 선택해도 12,000원
           </p>
-          <p className="text-sm mb-3">
+          <p className="text-sm mb-6">
             ** 등록비는 입금 날짜 기준입니다. 제출 후 바로 입금해주세요 :)
           </p>
 
@@ -351,8 +351,10 @@ export default function Page() {
           {/* ------------------- 8. 새가족/현역(선택) ------------------- */}
           <div className="mb-10">
             <label className="font-medium block mb-2">
-              7️⃣ 새돌/새가족/현역군지체 — 해당 시 선택
+              7️⃣ 2026 새돌 / 새가족 / 현역군지체 중 해당사항이 있다면 선택해주세요.
             </label>
+            <p className="text-sm text-gray-500 mb-1"> ** 새가족 기준 : 2025-2 텀에 등반하였거나, 아직 등반을 하지 않은 새가족 </p>
+            <p className="text-sm text-gray-500 mb-1"> ** 현역군지체 기준 : 공익, 직업군인, 카투사 제외 </p>
             <select
               className="w-full border rounded p-2"
               value={special}
@@ -410,7 +412,7 @@ export default function Page() {
   {/* ------------------- 안내 문구 + 표 표시 조건 ------------------- */}
 
 {attendType === "partial" && (
-  <div className="mb-4 text-sm text-left space-y-2">
+  <div className="mb-1 text-sm text-left space-y-2">
 
     <div className="font-medium text-red-700">
       ① 등록비가 동일하더라도, 반드시 실제로 참석하시는 일정을 체크해주시기 바랍니다!
