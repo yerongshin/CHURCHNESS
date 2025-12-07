@@ -6,7 +6,7 @@ import { ClipboardDocumentIcon } from "@heroicons/react/24/outline";
 
 const accountMap: Record<string, string> = {
   "2부 두나미스": "카카오뱅크 3333-35-7454312 (예금주: 이주선)",
-  "5부 필그림": "카카오뱅크 3333-22-46216669 (예금주: 신예현)",
+  "5부 필그림": "카카오뱅크 3333-22-4621669 (예금주: 신예현)",
   "6부 예닮공": "카카오뱅크 3333-34-1076815 (예금주: 이태희)",
 };
 
