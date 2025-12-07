@@ -437,7 +437,7 @@ export default function Page() {
       <table className="w-full border-collapse text-center text-[11px] sm:text-sm">
         <thead>
           <tr>
-            <th className="border p-2 bg-gray-100 w-24"></th>
+            <th className="border p-2 bg-gray-100 w-18"></th>
             {dayLabels.map((dl) => (
               <th
                 key={dl}
@@ -452,9 +452,9 @@ export default function Page() {
         <tbody>
           {rowKeys.map((r) => (
             <tr key={r.key}>
-              <td className="border p-2 bg-gray-50 font-semibold">
+              <td className="border p-1 bg-gray-50 font-semibold">
                 <div className="flex items-center justify-center gap-1">
-                  <r.icon className="w-5 h-5 text-gray-700" />
+                  <r.icon className="w-5 h-8 text-gray-700" />
                   {r.label}
                 </div>
               </td>
