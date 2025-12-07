@@ -226,7 +226,11 @@ export default function Page() {
             ** 등록비는 입금 날짜 기준입니다. 제출 후 바로 입금해주세요 :)
           </p>
 
-          <p className="text-sm">📞 문의 : 각 부서 행정간사</p>
+          <p className="text-sm">📞 문의 : </p>
+          <p className="text-sm">     2부 : 이주선 사역간사 (010-9454-8169) </p>
+                    <p className="text-sm">     5부 : 신예현 행정간사 (010-4581-1050) </p>
+                    <p className="text-sm">     6부 : 김지환 행정간사 (010-4977-3103) </p>
+
         </div>
 
         {/* ------------------------ 설문 시작 ------------------------ */}
@@ -341,6 +345,7 @@ export default function Page() {
             <label className="font-medium block mb-1">
               6️⃣ 현재 부서 GBS 리더 이름을 입력해주세요.
             </label>
+            <p className="text-sm text-gray-500 mb-2"> ** 리더, 엘더, 간사님의 경우 본인 이름을 적어주세요! </p>
             <input
               className="w-full border rounded p-2"
               value={leader}
@@ -429,7 +434,7 @@ export default function Page() {
   {/* 전참 또는 부분참일 때만 표 표시 */}
   {(attendType === "full" || attendType === "partial") && (
     <div className="overflow-x-auto relative mt-4">
-      <table className="min-w-[600px] w-full border-collapse text-center">
+      <table className="w-full border-collapse text-center text-[11px] sm:text-sm">
         <thead>
           <tr>
             <th className="border p-2 bg-gray-100 w-24"></th>
