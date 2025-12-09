@@ -348,7 +348,7 @@ const buttonSecondary =
 
           {/* ------------------- 2. 소속 ------------------- */}
           <div className="mb-10">
-            <label className="font-medium block mb-1">
+            <label className="font-medium block mb-3">
               1️⃣ 소속 부서를 선택해주세요.
             </label>
 
@@ -370,7 +370,7 @@ const buttonSecondary =
 
           {/* ------------------- 3. 학년 ------------------- */}
           <div className="mb-10">
-            <label className="font-medium block mb-1">
+            <label className="font-medium block mb-3">
               2️⃣ 학년을 선택해주세요. (2026년 기준)
             </label>
 
@@ -403,7 +403,7 @@ const buttonSecondary =
 
           {/* ------------------- 4. 성별 ------------------- */}
           <div className="mb-10">
-            <label className="font-medium block mb-1">3️⃣ 성별을 선택해주세요.</label>
+            <label className="font-medium block mb-3">3️⃣ 성별을 선택해주세요.</label>
             <div className="flex gap-6">
               <label className="flex items-center gap-2">
                 <input
@@ -431,7 +431,7 @@ const buttonSecondary =
 
           {/* ------------------- 5. 이름 ------------------- */}
           <div className="mb-10">
-            <label className="font-medium block mb-1">4️⃣ 이름을 입력해주세요.</label>
+            <label className="font-medium block mb-3">4️⃣ 이름을 입력해주세요.</label>
             <input
               className={inputBase}
               value={name}
@@ -487,10 +487,10 @@ const buttonSecondary =
 
  {/* ------------------- 9. 출석 체크 ------------------- */}
 <div className="mb-6">
-  <div className="font-medium mb-2">8️⃣ 참석 일정을 선택해주세요.</div>
+  <div className="font-medium mb-3">8️⃣ 참석 일정을 선택해주세요.</div>
 
 {/* ------------------- 전참 / 부분참 (Apple style) ------------------- */}
-<div className="flex mb-5 rounded-xl bg-gray-100 p-1 w-fit">
+<div className="flex mb-3 rounded-xl bg-gray-100 p-1 w-fit">
   {/* 전참 */}
   <button
     type="button"
