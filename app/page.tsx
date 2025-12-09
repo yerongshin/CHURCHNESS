@@ -11,6 +11,65 @@ import {
   Bars3Icon,
 } from "@heroicons/react/24/outline";
 
+
+const yearNameMap: Record<string, { year: number; label: string }[]> = {
+  /* -------------------- 2부 -------------------- */
+  "2부 두나미스": [
+    { year: 1, label: "2026 새돌" },
+    { year: 2, label: "2025 새돌" },
+    { year: 3, label: "설" },
+    { year: 4, label: "하온" },
+    { year: 5, label: "릴리" },
+    { year: 6, label: "히엘" },
+    { year: 7, label: "브레" },
+    { year: 8, label: "그랑" },
+    { year: 9, label: "예랑" },
+    { year: 10, label: "이레" },
+    { year: 11, label: "하울" },
+    { year: 12, label: "도담" },
+    { year: 13, label: "예나함" },
+  ],
+
+  /* -------------------- 5부 -------------------- */
+  "5부 필그림": [
+    { year: 1, label: "새돌" },
+    { year: 2, label: "아스테르" },
+    { year: 3, label: "유노이아" },
+    { year: 4, label: "아르니온" },
+    { year: 5, label: "피스티스" },
+    { year: 6, label: "클레마" },
+    { year: 7, label: "엘라이아" },
+    { year: 8, label: "엘레오스" },
+    { year: 9, label: "에워디아" },
+    { year: 10, label: "아파르케" },
+    { year: 11, label: "클레시스" },
+    { year: 12, label: "에이레네" },
+    { year: 13, label: "카르디아" },
+    { year: 14, label: "아가파오" },
+    { year: 15, label: "호밀레오" },
+  ],
+
+  /* -------------------- 6부 -------------------- */
+  "6부 예닮공": [
+    { year: 1, label: "2026 새돌" },
+    { year: 2, label: "2025 새돌" },
+    { year: 3, label: "헤세드" },
+    { year: 4, label: "아스테리" },
+    { year: 5, label: "마하나임" },
+    { year: 6, label: "히엘" },
+    { year: 7, label: "루하마" },
+    { year: 8, label: "포네" },
+    { year: 9, label: "유노이아" },
+    { year: 10, label: "에이레네" },
+    { year: 11, label: "프로이아" },
+    { year: 12, label: "나디야" },
+    { year: 13, label: "포이에마" },
+  ],
+};
+
+
+
+
 const accountMap: Record<string, string> = {
   "2부 두나미스": "카카오뱅크 3333-35-7454312 (예금주: 이주선)",
   "5부 필그림": "카카오뱅크 3333-22-4621669 (예금주: 신예현)",
@@ -80,6 +139,9 @@ export default function Page() {
   };
 
   const clearAll = () => setSelectedCells({});
+useEffect(() => {
+  setYear("");
+}, [department]);
 
   // --- fee 계산 ---
   useEffect(() => {
@@ -126,7 +188,7 @@ export default function Page() {
 
     if (!paid) return alert("입금을 완료해야 제출할 수 있습니다.");
 
-    // attendance columns mapping
+    // attendance mapping
     const attendanceMap: Record<string, string> = {};
     dayKeys.forEach((d) =>
       rowKeys.forEach((r) => {
@@ -185,27 +247,61 @@ export default function Page() {
     }
   };
 
+  // shared input/select classes
+const inputBase =
+  "w-full h-12 rounded-xl border border-gray-200 bg-white/60 backdrop-blur-md px-4 text-[15px] text-gray-900 shadow-sm transition focus:outline-none focus:border-gray-400 focus:bg-white/80";
+
+const buttonBase =
+  "inline-flex items-center justify-center h-11 px-5 rounded-full text-sm font-medium transition active:scale-[0.98]";
+
+const buttonPrimary =
+  "bg-black text-white hover:bg-gray-800";
+
+const buttonSecondary =
+  "bg-white/70 text-gray-900 border border-gray-200 hover:bg-white";
+
+
   return (
-    <div className="min-h-screen py-8 px-4 flex justify-center bg-black font-pretendard text-white text-sm sm:text-base">
+  <div className="min-h-screen px-4 py-10 flex justify-center bg-gradient-to-b from-neutral-100 to-neutral-200 font-pretendard text-black text-sm sm:text-base">
+
       <div className="w-full max-w-[800px]">
         {/* ------------------------ 타이틀 ------------------------ */}
-        <div className="bg-white text-black rounded-2xl shadow p-5 text-center mb-6">
-          <h1 className="text-xl font-semibold">
-            2026 사랑의교회 대학부 2•5•6 겨울연합수양회
-          </h1>
-          <p className="text-3xl mt-2 font-bold">
-            "CHURCHNESS : 교회다움"{' '}
-            <span className="text-gray-500 font-semibold">참가신청서</span>
-          </p>
+<div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-6 text-center mb-6">
+  <div className="flex flex-col items-center gap-2">
+    {/* 1줄 */}
+    <div className="text-lg sm:text-xl font-medium leading-snug whitespace-nowrap">
+      2026 사랑의교회 대학부 2•5•6 겨울연합수양회
+    </div>
+
+    {/* 2·3줄 */}
+    <div className="font-bold leading-snug">
+      {/* 모바일: 줄바꿈 */}
+      <div className="sm:hidden flex flex-col items-center gap-2">
+        <div className="text-2xl whitespace-nowrap">
+          "CHURCHNESS : 교회다움"
         </div>
+        <div className="text-2xl text-gray-700 font-medium">
+          참가신청서
+        </div>
+      </div>
+
+      {/* 태블릿 이상: 한 줄 + 공백 1칸 */}
+      <div className="hidden sm:flex text-3xl whitespace-nowrap">
+        <span>"CHURCHNESS : 교회다움"</span>
+        <span className="mx-[0.25em]"></span>
+        <span className="text-gray-500 font-semibold">참가신청서</span>
+      </div>
+    </div>
+  </div>
+</div>
 
         {/* ------------------------ 안내문 ------------------------ */}
-        <div className="w-full bg-gray-50 text-black rounded-xl p-5 mb-6 text-sm leading-relaxed border border-gray-200">
-          <p className="font-semibold text-center mb-6">
-            “또 만물을 그의 발 아래에 복종하게 하시고 그를 만물 위에 교회의
+        <div className="bg-white backdrop-blur-xl border border-white/40 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-6 mb-6 elative">
+          <p className="mb-6 text-center italic font-medium text-gray-600 leading-relaxed">
+            또 만물을 그의 발 아래에 복종하게 하시고 그를 만물 위에 교회의
             머리로 삼으셨느니라 교회는 그의 몸이니 만물 안에서 만물을 충만하게
-            하시는 이의 충만함이니라" [에베소서 1:22-23]
-          </p>
+            하시는 이의 충만함이니라 (에베소서 1:22-23)
+          </p>         
 
           <p className="text-sm mb-1">🗓️ 주후 2026년 1월 21일(수) - 1월 24일(토)</p>
           <p className="text-sm mb-1">📍 사랑의교회 안성수양관</p>
@@ -228,9 +324,8 @@ export default function Page() {
 
           <p className="text-sm">📞 문의 : </p>
           <p className="text-sm">     2부 : 이주선 사역간사 (010-9454-8169) </p>
-                    <p className="text-sm">     5부 : 신예현 행정간사 (010-4581-1050) </p>
-                    <p className="text-sm">     6부 : 김지환 행정간사 (010-4977-3103) </p>
-
+          <p className="text-sm">     5부 : 신예현 행정간사 (010-4581-1050) </p>
+          <p className="text-sm">     6부 : 김지환 행정간사 (010-4977-3103) </p>
         </div>
 
         {/* ------------------------ 설문 시작 ------------------------ */}
@@ -244,27 +339,29 @@ export default function Page() {
               </span>
               <input
                 type="checkbox"
-                className="h-5 w-5 cursor-pointer"
+                className="h-6 w-6 cursor-pointer accent-black"
                 checked={agree}
                 onChange={(e) => setAgree(e.target.checked)}
               />
             </label>
           </div>
 
-          {/* 나머지 입력 UI (부서 / 학년 / 성별 / 이름 ... 등) */}
-          {/* ⚠️ 너무 길어지므로 생략 없이 모두 포함 — 그대로 수정해드렸습니다 */}
-
           {/* ------------------- 2. 소속 ------------------- */}
           <div className="mb-10">
             <label className="font-medium block mb-1">
               1️⃣ 소속 부서를 선택해주세요.
             </label>
+
             <select
-              className="w-full border rounded p-2"
+              className={inputBase}
               value={department}
               onChange={(e) => setDepartment(e.target.value)}
             >
-              <option value="">선택해주세요</option>
+              {/* placeholder */}
+              <option value="" disabled hidden>
+                선택해주세요
+              </option>
+
               <option value="2부 두나미스">2부 두나미스</option>
               <option value="5부 필그림">5부 필그림</option>
               <option value="6부 예닮공">6부 예닮공</option>
@@ -276,17 +373,31 @@ export default function Page() {
             <label className="font-medium block mb-1">
               2️⃣ 학년을 선택해주세요. (2026년 기준)
             </label>
+
             <select
-              className="w-full border rounded p-2"
+              className={inputBase}
               value={year}
               onChange={(e) => setYear(e.target.value)}
+              disabled={!department}
             >
-              <option value="">선택해주세요</option>
-              {Array.from({ length: 16 }).map((_, i) => (
-                <option key={i} value={String(i + 1)}>
-                  {i + 1}학년
+              {/* placeholder */}
+              <option value="" disabled hidden>
+                {department ? "학년을 선택해주세요" : "부서를 먼저 선택해주세요"}
+              </option>
+
+              {yearNameMap[department]?.map(({ year, label }) => (
+                <option key={year} value={year}>
+                  {year}학년 {label}
                 </option>
               ))}
+
+              {/* fallback (혹시 맵 없는 경우) */}
+              {!yearNameMap[department] &&
+                Array.from({ length: 16 }).map((_, i) => (
+                  <option key={i + 1} value={i + 1}>
+                    {i + 1}학년
+                  </option>
+                ))}
             </select>
           </div>
 
@@ -298,6 +409,7 @@ export default function Page() {
                 <input
                   type="radio"
                   name="gender"
+                  className="h-4 w-4"
                   checked={gender === "남자"}
                   onChange={() => setGender("남자")}
                 />
@@ -308,6 +420,7 @@ export default function Page() {
                 <input
                   type="radio"
                   name="gender"
+                  className="h-4 w-4"
                   checked={gender === "여자"}
                   onChange={() => setGender("여자")}
                 />
@@ -320,7 +433,7 @@ export default function Page() {
           <div className="mb-10">
             <label className="font-medium block mb-1">4️⃣ 이름을 입력해주세요.</label>
             <input
-              className="w-full border rounded p-2"
+              className={inputBase}
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -333,7 +446,7 @@ export default function Page() {
             </label>
             <p className="text-sm text-gray-500 mb-2">예시: 010-1234-5678</p>
             <input
-              className="w-full border rounded p-2"
+              className={inputBase}
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="010-1234-5678"
@@ -347,7 +460,7 @@ export default function Page() {
             </label>
             <p className="text-sm text-gray-500 mb-2"> ** 리더, 엘더, 간사님의 경우 본인 이름을 적어주세요! </p>
             <input
-              className="w-full border rounded p-2"
+              className={inputBase}
               value={leader}
               onChange={(e) => setLeader(e.target.value)}
             />
@@ -361,11 +474,11 @@ export default function Page() {
             <p className="text-sm text-gray-500 mb-1"> ** 새가족 기준 : 2025-2 텀에 등반하였거나, 아직 등반을 하지 않은 새가족 </p>
             <p className="text-sm text-gray-500 mb-1"> ** 현역군지체 기준 : 공익, 직업군인, 카투사 제외 </p>
             <select
-              className="w-full border rounded p-2"
+              className={inputBase}
               value={special}
               onChange={(e) => setSpecial(e.target.value)}
             >
-              <option value="">선택 안 함</option>
+              <option value="">해당사항 없음</option>
               <option value="2026 새돌">2026 새돌</option>
               <option value="새가족">새가족</option>
               <option value="현역 군지체">현역 군지체</option>
@@ -373,40 +486,45 @@ export default function Page() {
           </div>
 
  {/* ------------------- 9. 출석 체크 ------------------- */}
-<div className="mb-10">
+<div className="mb-6">
   <div className="font-medium mb-2">8️⃣ 참석 일정을 선택해주세요.</div>
-  
 
-  {/* ------------------- 전참/부분참 버튼 ------------------- */}
-  <div className="flex gap-3 mb-4">
-    <button
-      type="button"
-      onClick={() => {
-        setAttendType("full");
-        selectAll(); // 전체 체크
-      }}
-      className={`px-4 py-1.5 rounded ${
-        attendType === "full" ? "bg-blue-600 text-white" : "bg-gray-200"
+{/* ------------------- 전참 / 부분참 (Apple style) ------------------- */}
+<div className="flex mb-5 rounded-xl bg-gray-100 p-1 w-fit">
+  {/* 전참 */}
+  <button
+    type="button"
+    onClick={() => {
+      setAttendType("full");
+      selectAll();
+    }}
+    className={`px-5 py-2 text-sm font-medium rounded-lg transition-all
+      ${
+        attendType === "full"
+          ? "bg-white text-gray-900 shadow-sm"
+          : "text-gray-500 hover:text-gray-900"
       }`}
-    >
-      전참
-    </button>
+  >
+    전참
+  </button>
 
-    <button
-      type="button"
-      onClick={() => {
-        setAttendType("partial");
-        clearAll(); // 선택 초기화
-      }}
-      className={`px-4 py-1.5 rounded ${
-        attendType === "partial" ? "bg-blue-600 text-white" : "bg-gray-200"
+  {/* 부분참 */}
+  <button
+    type="button"
+    onClick={() => {
+      setAttendType("partial");
+      clearAll();
+    }}
+    className={`px-5 py-2 text-sm font-medium rounded-lg transition-all
+      ${
+        attendType === "partial"
+          ? "bg-white text-gray-900 shadow-sm"
+          : "text-gray-500 hover:text-gray-900"
       }`}
-    >
-      부분참
-    </button>
-  </div>
-
-  {/* ------------------- 안내 문구 + 표 표시 조건 ------------------- */}
+  >
+    부분참
+  </button>
+</div>
 
   {attendType === "partial" && (
     <div className="mb-3 text-center font-bold text-black-700">
@@ -414,129 +532,173 @@ export default function Page() {
     </div>
   )}
 
-  {/* ------------------- 안내 문구 + 표 표시 조건 ------------------- */}
 
-{attendType === "partial" && (
-  <div className="mb-1 text-sm text-left space-y-2">
+{/* 전참 또는 부분참일 때만 표 표시 */}
+{(attendType === "full" || attendType === "partial") && (
+  <div className="overflow-x-auto rounded-2xl border border-gray-200 bg-white/90 backdrop-blur-md shadow-sm">
 
-    <div className="font-medium text-red-700">
-      ① 등록비가 동일하더라도, 반드시 실제로 참석하시는 일정을 체크해주시기 바랍니다!
-    </div>
+    {/* ✅ 부분참 안내 문구 (카드 내부 상단) */}
+    {attendType === "partial" && (
+      <div className="px-4 py-3 border-b border-gray-100 text-sm">
+        <div className="font-semibold text-gray-800 mb-2">
+          부분참 참석 안내
+        </div>
 
-    <div className="font-medium text-red-700">
-      ② 대학부 셔틀버스를 이용하시는 경우, 저녁식사 시간 이후에 도착 예정이기 때문에
-      해당일 <span className="font-bold underline">'숙박'</span>부터 체크해주시기 바랍니다!
-    </div>
-
-  </div>
-)}
-
-  {/* 전참 또는 부분참일 때만 표 표시 */}
-  {(attendType === "full" || attendType === "partial") && (
-    <div className="overflow-x-auto relative mt-4">
-      <table className="w-full border-collapse text-center text-[11px] sm:text-sm">
-        <thead>
-          <tr>
-            <th className="border p-2 bg-gray-100 w-18"></th>
-            {dayLabels.map((dl) => (
-              <th
-                key={dl}
-                className="border p-2 bg-gray-100 text-xs sm:text-sm"
-              >
-                {dl}
-              </th>
-            ))}
-          </tr>
-        </thead>
-
-        <tbody>
-          {rowKeys.map((r) => (
-            <tr key={r.key}>
-              <td className="border p-1 bg-gray-50 font-semibold">
-                <div className="flex items-center justify-center gap-1">
-                  <r.icon className="w-5 h-8 text-gray-700" />
-                  {r.label}
-                </div>
-              </td>
-
-              {dayKeys.map((dk) => {
-                const k = `${dk}-${r.key}`;
-                const disabled = !!disabledMap[k];
-
-                return (
-                  <td key={k} className="border p-2">
-                    <input
-                      type="checkbox"
-                      checked={!!selectedCells[k]}
-                      disabled={disabled}
-                      onChange={() => toggleCell(dk, r.key)}
-                      className={`h-5 w-5 ${
-                        disabled
-                          ? "opacity-30 cursor-not-allowed"
-                          : "cursor-pointer"
-                      }`}
-                    />
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <div className="text-right mt-2 pr-2 text-sm font-medium text-blue-700">
-        등록비: {fee.toLocaleString()}원
+        <ul className="space-y-1 text-gray-600">
+          <li>
+            • 등록비와 관계없이 <b>실제 참석 일정</b>을 정확히 선택해주세요.
+          </li>
+          <li>
+            • 대학부 셔틀버스 이용 시, 저녁 이후 도착 예정이므로
+            <b> 해당일 ‘숙박’</b>부터 체크해주세요.
+          </li>
+        </ul>
       </div>
-    </div>
-  )}
-</div>
+    )}
 
+    {/* ✅ 출석 표 */}
+    <table className="w-full text-center text-[11px] sm:text-sm">
+      <thead>
+        <tr>
+          <th className="p-2 bg-gray-50 text-gray-700 font-medium w-16"></th>
+          {dayLabels.map((dl) => (
+            <th
+              key={dl}
+              className="p-2 bg-gray-50 text-gray-700 font-medium"
+              style={{ width: 60, minWidth: 60 }}
+            >
+              {dl}
+            </th>
+          ))}
+        </tr>
+      </thead>
 
-          {/* ------------------- 입금 안내 ------------------- */}
-          <div className="mb-7 bg-[#fff3cd] border border-[#ffeeba] rounded p-4 text-base leading-relaxed">
-            <div className="font-black mb-2">💸 입금 안내 :</div>
-
-            <div className="mt-2">
-              <span className="font-medium">
-                ** {department || "부서 선택 전"} 입금 계좌 :
-              </span>
-
-              <div className="mt-2 pl-1 flex items-center gap-2 font-medium text-gray-800">
-                {accountText}
-                <button
-                  onClick={() => navigator.clipboard.writeText(accountText)}
-                  className="text-gray-600 hover:text-black"
-                >
-                  <ClipboardDocumentIcon className="w-6 h-6" />
-                </button>
+      <tbody>
+        {rowKeys.map((r) => (
+          <tr key={r.key} className="border-t border-gray-100">
+            <td className="p-2 bg-gray-50/70 font-medium text-gray-800">
+              <div className="flex items-center justify-center gap-1">
+                <r.icon className="w-4 h-4 text-gray-600" />
+                <span>{r.label}</span>
               </div>
+            </td>
 
-              <div className="mt-2 pl-1 font-medium text-gray-800">
-                입금하실 금액: {fee.toLocaleString()}원
-              </div>
+            {dayKeys.map((dk) => {
+              const k = `${dk}-${r.key}`;
+              const disabled = !!disabledMap[k];
 
-              <div className="mt-3">
-                <label className="flex items-center gap-2">
+              return (
+                <td key={k} className="p-2 hover:bg-gray-50 transition">
                   <input
                     type="checkbox"
-                    checked={paid}
-                    onChange={(e) => setPaid(e.target.checked)}
+                    checked={!!selectedCells[k]}
+                    disabled={disabled}
+                    onChange={() => toggleCell(dk, r.key)}
+                    className={`h-5 w-5 accent-black ${
+                      disabled
+                        ? "opacity-30 cursor-not-allowed"
+                        : "cursor-pointer"
+                    }`}
                   />
-                  <span className="font-semibold">입금 완료했습니다!</span>
-                </label>
-              </div>
-            </div>
-          </div>
+                </td>
+              );
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
 
-          {/* ------------------- 제출 버튼 ------------------- */}
-          <div className="mt-6">
-            <button
-              onClick={handleSubmit}
-              className="w-full bg-[#fdf1b5] py-3 rounded text-base font-medium hover:brightness-95 cursor-pointer transition-transform transform hover:-translate-y-0.5 active:scale-95"
-            >
-              제출하기
-            </button>
-          </div>
+    {/* ✅ 등록비 요약 바 */}
+    <div className="flex justify-between items-center px-4 py-3 border-t border-gray-100 bg-gray-50/70">
+      <span className="text-sm text-gray-600">
+        선택한 일정 기준 등록비
+      </span>
+      <span className="text-base font-semibold text-gray-900">
+        {fee.toLocaleString()}원
+      </span>
+    </div>
+  </div>
+)}
+  </div>
+
+
+
+{/* ------------------- 입금 안내 ------------------- */}
+<div   className="
+    mb-8
+    px-5 py-4
+    rounded-2xl
+    border border-gray-200
+    bg-white/80
+    backdrop-blur-sm
+    text-sm
+    shadow-sm
+">
+  <div className="flex items-center gap-2 mb-4">
+    <span className="text-lg">💸</span>
+    <span className="font-semibold text-gray-900">입금 안내</span>
+  </div>
+
+  <div className="space-y-3 text-sm text-gray-800">
+    <div>
+      <span className="font-medium text-gray-600">
+        {department || "부서 선택 전"} 입금 계좌
+      </span>
+
+      <div className="mt-1 flex items-center gap-2 font-medium">
+        <span>{accountText}</span>
+        <button
+          type="button"
+          onClick={() => navigator.clipboard.writeText(accountText)}
+          className="text-gray-500 hover:text-gray-900 transition"
+          aria-label="계좌 복사"
+        >
+          <ClipboardDocumentIcon className="w-5 h-5" />
+        </button>
+      </div>
+    </div>
+
+    <div className="flex justify-between items-center pt-3 mt-2 border-t border-gray-200">
+      <span className="font-medium text-gray-600">입금하실 금액</span>
+      <span className="text-lg font-semibold text-gray-900">
+        {fee.toLocaleString()}원
+      </span>
+    </div>
+
+    <div className="pt-3">
+      <label className="flex items-center gap-2 cursor-pointer">
+        <span className="font-medium text-gray-800">
+          입금을 완료했습니다
+        </span>
+        <input
+      type="checkbox"
+      checked={paid}
+      onChange={(e) => setPaid(e.target.checked)}
+      className="
+        h-5 w-5
+        rounded
+        border-gray-300
+        accent-gray-900
+        cursor-pointer
+      "
+    />
+      </label>
+    </div>
+  </div>
+</div>
+
+{/* ------------------- 제출 버튼 ------------------- */}
+<div className="mt-6">
+  <button
+    onClick={handleSubmit}
+    className="w-full h-12 rounded-xl bg-black text-white text-base font-medium
+               transition-all duration-150
+               hover:bg-gray-900
+               active:scale-[0.98]"
+  >
+    제출하기
+  </button>
+</div>
         </div>
       </div>
     </div>
