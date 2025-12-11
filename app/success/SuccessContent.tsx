@@ -45,7 +45,7 @@ export default function SuccessContent() {
           <CheckCircleIcon className="w-14 h-14 mx-auto text-green-600 mb-3" />
 
           <h1 className="text-xl font-semibold mb-2">
-            참가신청서 제출이 완료되었습니다
+            겨울연합수양회 참가신청서 제출이 완료되었습니다
           </h1>
 
           <p className="text-sm text-gray-600">
