@@ -89,6 +89,8 @@ export default function Page() {
   const [leader, setLeader] = useState('');
   const [special, setSpecial] = useState(''); // optional
   const [paid, setPaid] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
 
   const agreeRef = React.useRef<HTMLDivElement>(null);
 
@@ -173,6 +175,7 @@ useEffect(() => {
 
   const handleSubmit = async () => {
     // required fields
+    if (isSubmitting) return;
     if (!agree) return alert("개인정보 수집 동의가 필요합니다.");
     if (!department) return alert("소속 부서를 선택해주세요.");
     if (!year) return alert("학년을 선택해주세요.");
@@ -229,6 +232,7 @@ useEffect(() => {
     };
 
     try {
+      setIsSubmitting(true);
       const res = await fetch("/api/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -240,10 +244,12 @@ useEffect(() => {
         router.push(`/success?department=${encodeURIComponent(department)}&fee=${fee}`);
       } else {
         alert("제출 중 오류가 발생했습니다.");
+        setIsSubmitting(false);
       }
     } catch (err) {
       console.error(err);
       alert("제출 중 오류가 발생했습니다.");
+      setIsSubmitting(false);
     }
   };
 
@@ -691,12 +697,14 @@ const buttonSecondary =
 <div className="mt-6">
   <button
     onClick={handleSubmit}
-    className="w-full h-12 rounded-xl bg-black text-white text-base font-medium
-               transition-all duration-150
-               hover:bg-gray-900
-               active:scale-[0.98]"
+    disabled={isSubmitting}
+    className={`w-full h-12 rounded-xl text-base font-medium transition-all
+      ${isSubmitting
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-black text-white hover:bg-gray-900 active:scale-[0.98]"
+      }`}
   >
-    제출하기
+    {isSubmitting ? "제출 중입니다..." : "제출하기"}
   </button>
 </div>
         </div>
