@@ -284,11 +284,6 @@ const buttonSecondary =
     className="w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] object-contain"
   />
 </div>
-
-{/* ------------------------ 안내문 ------------------------ */}
-<div className="bg-white backdrop-blur-xl border border-white/40 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-6 mb-6">
-
-  {/* 타이틀 */}
   <div className="text-center mb-6">
 
     <div className="font-medium">
@@ -308,6 +303,11 @@ const buttonSecondary =
 
     </div>
   </div>
+
+{/* ------------------------ 안내문 ------------------------ */}
+<div className="bg-white backdrop-blur-xl border border-white/40 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-6 mb-6">
+
+  {/* 타이틀 */}
 
   {/* 성경 구절 */}        
           <p className="mb-6 text-center italic font-medium text-gray-600 leading-relaxed">
