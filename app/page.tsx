@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
 
 import {
   ClipboardDocumentIcon,
@@ -268,41 +269,47 @@ const buttonSecondary =
 
 
   return (
+
+    
   <div className="min-h-screen px-4 py-10 flex justify-center bg-gradient-to-b from-neutral-100 to-neutral-200 font-pretendard text-black text-sm sm:text-base">
 
       <div className="w-full max-w-[800px]">
-        {/* ------------------------ 타이틀 ------------------------ */}
-<div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-6 text-center mb-6">
-  <div className="flex flex-col items-center gap-2">
-    {/* 1줄 */}
-    <div className="text-lg sm:text-xl font-medium leading-snug whitespace-nowrap">
-      2026 사랑의교회 대학부 2•5•6 겨울연합수양회
-    </div>
-
-    {/* 2·3줄 */}
-    <div className="font-bold leading-snug">
-      {/* 모바일: 줄바꿈 */}
-      <div className="sm:hidden flex flex-col items-center gap-2">
-        <div className="text-2xl whitespace-nowrap">
-          "CHURCHNESS : 교회다움"
-        </div>
-        <div className="text-2xl text-gray-700 font-medium">
-          참가신청서
-        </div>
-      </div>
-
-      {/* 태블릿 이상: 한 줄 + 공백 1칸 */}
-      <div className="hidden sm:flex text-3xl whitespace-nowrap">
-        <span>"CHURCHNESS : 교회다움"</span>
-        <span className="mx-[0.25em]"></span>
-        <span className="text-gray-500 font-semibold">참가신청서</span>
-      </div>
-    </div>
-  </div>
+ {/* ------------------------ 로고 ------------------------ */}
+<div className="flex justify-center mb-4">
+  <Image
+    src="/logo.png"
+    alt="겨울연합수양회 로고"
+    width={120}
+    height={120}
+    className="w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] object-contain"
+  />
 </div>
 
-        {/* ------------------------ 안내문 ------------------------ */}
-        <div className="bg-white backdrop-blur-xl border border-white/40 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-6 mb-6 elative">
+{/* ------------------------ 안내문 ------------------------ */}
+<div className="bg-white backdrop-blur-xl border border-white/40 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-6 mb-6">
+
+  {/* 타이틀 */}
+  <div className="text-center mb-6">
+
+    <div className="font-medium">
+            <div className="flex flex-col items-center gap-1">
+        <div className="text-s">2026 사랑의교회 대학부 2•5•6 겨울연합수양회</div>
+      </div>
+    </div>
+    <div className="font-bold">
+      <div className="flex flex-col items-center gap-1">
+        <div className="text-xl">"CHURCHNESS : 교회다움"</div>
+      </div>
+            <div className="flex flex-col items-center gap-1">
+        <div className="text-xl">참가신청서 </div>
+      </div>
+
+      
+
+    </div>
+  </div>
+
+  {/* 성경 구절 */}        
           <p className="mb-6 text-center italic font-medium text-gray-600 leading-relaxed">
             또 만물을 그의 발 아래에 복종하게 하시고 그를 만물 위에 교회의
             머리로 삼으셨느니라 교회는 그의 몸이니 만물 안에서 만물을 충만하게
@@ -315,14 +322,14 @@ const buttonSecondary =
 
           <p className="text-sm mb-1">
             <span className="bg-yellow-100">
-              ✅ <b>1차 등록</b>: 주후 2025년 12월 7일(주일) - 2026년 1월 3일(토) → 전참 60,000원
+              ✅ <b>1차 등록</b> : 주후 2025년 12월 7일(주일) - 2026년 1월 3일(토) → 전참 60,000원
             </span>
           </p>
-          <p className="text-sm mb-1">✅ 2차 등록: 주후 2026년 1월 4일(주일) - 1월 18일(주일) → 전참 65,000원</p>
+          <p className="text-sm mb-1">✅ 2차 등록 : 주후 2026년 1월 4일(주일) - 1월 18일(주일) → 전참 65,000원</p>
           <p className="text-sm mb-6">✅ 현장 등록 : 주후 2026년 1월 21일(수) → 전참 70,000원</p>
 
           <p className="text-sm mb-1">
-            ** 저녁식사·숙박: 둘 중 하나만 선택하거나 둘 다 선택해도 12,000원
+            ** 저녁식사·숙박 : 둘 중 하나만 선택하거나 둘 다 선택해도 12,000원
           </p>
           <p className="text-sm mb-6">
             ** 등록비는 입금 날짜 기준입니다. 제출 후 바로 입금해주세요 :)
@@ -478,7 +485,7 @@ const buttonSecondary =
               7️⃣ 2026 새돌 / 새가족 / 현역군지체 중 해당사항이 있다면 선택해주세요.
             </label>
             <p className="text-sm text-gray-500 mb-1"> ** 새가족 기준 : 2025-2 텀에 등반하였거나, 아직 등반을 하지 않은 새가족 </p>
-            <p className="text-sm text-gray-500 mb-1"> ** 현역군지체 기준 : 공익, 직업군인, 카투사 제외 </p>
+            <p className="text-sm text-gray-500 mb-1"> ** 현역군지체 기준 : 사회복무요원, 직업군인, 카투사 제외 </p>
             <select
               className={inputBase}
               value={special}
