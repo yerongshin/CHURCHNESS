@@ -18,7 +18,7 @@ const yearNameMap: Record<string, { year: number; label: string }[]> = {
   /* -------------------- 2부 -------------------- */
   "2부 두나미스": [
     { year: 1, label: "2026 새돌" },
-    { year: 2, label: "2025 새돌" },
+    { year: 2, label: "이로" },
     { year: 3, label: "설" },
     { year: 4, label: "하온" },
     { year: 5, label: "릴리" },
@@ -54,7 +54,7 @@ const yearNameMap: Record<string, { year: number; label: string }[]> = {
   /* -------------------- 6부 -------------------- */
   "6부 예닮공": [
     { year: 1, label: "2026 새돌" },
-    { year: 2, label: "2025 새돌" },
+    { year: 2, label: "예디드" },
     { year: 3, label: "헤세드" },
     { year: 4, label: "아스테리" },
     { year: 5, label: "마하나임" },
